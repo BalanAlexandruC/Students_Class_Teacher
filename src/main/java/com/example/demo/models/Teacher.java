@@ -14,15 +14,11 @@ import java.util.Set;
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_teacher")
     private Long id;
 
     @JsonIgnore
     @OneToMany(mappedBy = "teacher")
     private Set<Courses> courses= new HashSet<>();
-
-
-
 
     private String teacher;
     private Long likes;
@@ -34,7 +30,6 @@ public class Teacher {
     public String getTeacher() {
         return teacher;
     }
-
 
     public Long getLikes() {
         return likes;

@@ -9,7 +9,6 @@ import javax.persistence.*;
 public class Classrooms {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_classrooms")
     private Long id;
     @JsonIgnore
     @OneToOne(mappedBy = "classroom")

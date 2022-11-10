@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="api/v1/classes")
+@RequestMapping(path="api/v1/course")
 public class CoursesController {
 
     private final CoursesService coursesService;
@@ -19,10 +19,10 @@ public class CoursesController {
         this.coursesService = coursesService;
     }
 
-    @GetMapping("/findAllCourses")
+    @GetMapping("/get")
     public List<Courses> getCourses(){return coursesService.getCourses();}
 
-    @PostMapping("/registerNewCourse")
+    @PostMapping("/register")
     public void registerNewCourse(@RequestBody  Courses courses){
         coursesService.addNewCourse(courses);
     }
@@ -38,21 +38,21 @@ public class CoursesController {
 
 
 
-    @PutMapping("/{studentId}/students/{courseId}")
+    @PutMapping("/{courseId}/student/{studentId}")
     public void enrolledStudentToCourses(
             @PathVariable("courseId") Long courseId,
             @PathVariable("studentId") Long studentId
     ){
         coursesService.enrollStudentToCourse(courseId,studentId);
     }
-    @PutMapping("/{teacherId}/teacher/{courseId}")
+    @PutMapping("/{courseId}/teacher/{teacherId}")
     public void assignTeacherToCourse(
             @PathVariable("courseId") Long courseId,
             @PathVariable("teacherId") Long teacherId
     ){
         coursesService.assignTeacherToCourse(courseId,teacherId);
     }
-    @PutMapping("/{classroomId}/classroom/{courseId}")
+    @PutMapping("/{courseId}/classroom/{classroomId}")
     public void assignClassroomToCourse(
             @PathVariable("classroomId") Long classroomId,
             @PathVariable("courseId") Long courseId

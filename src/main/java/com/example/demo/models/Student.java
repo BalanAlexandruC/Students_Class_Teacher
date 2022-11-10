@@ -14,20 +14,15 @@ import java.util.Set;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name="id_student")
     private Long id;
-//    @Column(name="name")
     @JsonIgnore
     @ManyToMany(mappedBy = "enrolledStudents")
     private Set<Courses> coursesSet= new HashSet<>();
 
 
     private String name;
-//    @Column(name="email")
     private String email;
-//    @Column(name="dob")
     private LocalDate dob;
-//    @Column(name="age")
     @Transient
     private Integer age;
 

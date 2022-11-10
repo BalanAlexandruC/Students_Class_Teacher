@@ -16,9 +16,9 @@ public class TeacherController {
     public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
-    @GetMapping("/findAllTeachers")
+    @GetMapping("/get")
     public List<Teacher> getTeacher(){return teacherService.getTeacher();}
-    @PostMapping("/registerTeacher")
+    @PostMapping("/register")
     public void registerTeacher(@RequestBody Teacher teacher){teacherService.addNewTeacher(teacher);}
     @DeleteMapping(path = "{teacherId}")
     public void deleteTeacher(@PathVariable("teacherId") Long teacherId){teacherService.deleteTeacher(teacherId);}

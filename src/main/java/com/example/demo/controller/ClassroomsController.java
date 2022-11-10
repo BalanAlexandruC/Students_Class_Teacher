@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="api/v1/classrooms")
+@RequestMapping(path="api/v1/classroom")
 public class ClassroomsController {
     private final ClassroomsService classroomsService;
 
@@ -17,10 +17,10 @@ public class ClassroomsController {
         this.classroomsService = classroomsService;
     }
 
-    @GetMapping("/findAllClassrooms")
+    @GetMapping("/get")
     public List<Classrooms> getClassrooms(){return classroomsService.getClassrooms();}
 
-    @PostMapping("/registerNewClassrooms")
+    @PostMapping("/register")
     public void registerNewCourse(@RequestBody Classrooms classrooms){
         classroomsService.addNewClassroom(classrooms);
     }

@@ -9,8 +9,7 @@ import java.util.Set;
 @Table(name = "courses")
 public class Courses {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_course")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToMany
@@ -22,18 +21,15 @@ public class Courses {
     private Set<Student> enrolledStudents = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "teacher_id", referencedColumnName = "id_teacher")
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private Teacher teacher;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "classroom_id", referencedColumnName = "id_classrooms")
+    @JoinColumn(name = "classroom_id", referencedColumnName = "id")
     private Classrooms classroom;
 
 
-
     private String courseName;
-
-    @Column(name = "duration")
     private Long duration;
 
     public Long getId() {

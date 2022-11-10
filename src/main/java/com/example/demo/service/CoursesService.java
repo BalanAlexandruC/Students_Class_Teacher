@@ -46,40 +46,6 @@ public class CoursesService {
         }
         coursesRepository.deleteById(courseId);
     }
-
-
-    public void enrollStudentToCourse(Long courseId, Long studentId) {
-        boolean existsCourse = coursesRepository.existsById(courseId);
-        boolean existsStudent = studentRepository.existsById(studentId);
-        if (!existsCourse) {
-            throw new IllegalStateException("nu exista cursul dumneavoastra");
-        }
-        if (!existsStudent) {
-            throw new IllegalStateException("nu exista studnetul in baza de date");
-        }
-        Courses courses = coursesRepository.findById(courseId).get();
-        Student student = studentRepository.findById(studentId).get();
-        courses.enrollStudent(student);
-        coursesRepository.save(courses);
-    }
-
-    public void assignTeacherToCourse(Long courseId, Long teacherId) {
-        Courses courses = coursesRepository.findById(courseId).get();
-        Teacher teacher = teacherRepository.findById(teacherId).get();
-        courses.assignTeacher(teacher);
-        coursesRepository.save(courses);
-    }
-
-    public void assignClassroomToCourse(Long classroomId, Long courseId) {
-        Classrooms classrooms = classroomsRepository.findById(classroomId).get();
-        Courses courses = coursesRepository.findById(courseId).get();
-        if (!classrooms.getAvailability()) {
-            throw new IllegalStateException("Your class is not available");
-        }
-        courses.assignClassroom(classrooms);
-        coursesRepository.save(courses);
-    }
-
     @Transactional
     public void updateCourse(Long courseId, String courseName, Long duration) {
         Courses courses = coursesRepository.findById(courseId).orElseThrow(() -> new IllegalStateException(
@@ -95,5 +61,40 @@ public class CoursesService {
 
 
     }
+
+    @Transactional
+    public void enrollStudentToCourse(Long courseId, Long studentId) {
+        boolean existsCourse = coursesRepository.existsById(courseId);
+        boolean existsStudent = studentRepository.existsById(studentId);
+        if (!existsCourse) {
+            throw new IllegalStateException("nu exista cursul dumneavoastra");
+        }
+        if (!existsStudent) {
+            throw new IllegalStateException("nu exista studnetul in baza de date");
+        }
+        Courses courses = coursesRepository.findById(courseId).get();
+        Student student = studentRepository.findById(studentId).get();
+        courses.enrollStudent(student);
+        coursesRepository.save(courses);
+    }
+    @Transactional
+    public void assignTeacherToCourse(Long courseId, Long teacherId) {
+        Courses courses = coursesRepository.findById(courseId).get();
+        Teacher teacher = teacherRepository.findById(teacherId).get();
+        courses.assignTeacher(teacher);
+        coursesRepository.save(courses);
+    }
+    @Transactional
+    public void assignClassroomToCourse(Long classroomId, Long courseId) {
+        Classrooms classrooms = classroomsRepository.findById(classroomId).get();
+        Courses courses = coursesRepository.findById(courseId).get();
+        if (!classrooms.getAvailability()) {
+            throw new IllegalStateException("Your class is not available");
+        }
+        courses.assignClassroom(classrooms);
+        coursesRepository.save(courses);
+    }
+
+
 }
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class TeacherService {
@@ -23,7 +24,12 @@ public class TeacherService {
     }
 
     public void addNewTeacher(Teacher teacher) {
-        teacherRepository.save(teacher);
+
+        Optional<Teacher> teacherOptional = teacherRepository.findByTeacher(teacher.getTeacher());
+        if (teacherOptional.isPresent()) {
+            throw new IllegalStateException("Already existing teacher");
+        }
+            teacherRepository.save(teacher);
     }
 
     public void deleteTeacher(Long teacherId) {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClassroomsService {
@@ -21,6 +22,10 @@ public class ClassroomsService {
     }
 
     public void addNewClassroom(Classrooms classrooms){
+        Optional<Classrooms> classroomsOptional = classroomsRepository.findByName(classrooms.getName());
+        if (classroomsOptional.isPresent()) {
+            throw new IllegalStateException("Already existing classroom");
+        }
         classroomsRepository.save(classrooms);
     }
 
