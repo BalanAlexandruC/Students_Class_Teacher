@@ -9,14 +9,18 @@ import com.example.demo.repositoryes.CoursesRepository;
 import com.example.demo.repositoryes.StudentRepository;
 import com.example.demo.repositoryes.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
-public class CoursesService {
+public class CoursesService implements com.example.demo.service.interfaces.CoursesService {
 
     private final CoursesRepository coursesRepository;
     private final StudentRepository studentRepository;
@@ -31,14 +35,23 @@ public class CoursesService {
         this.classroomsRepository = classroomsRepository;
     }
 
+    @Cacheable(cacheNames = "courses", key = "#id", condition="#p0!=null")
     public List<Courses> getCourses() {
         return coursesRepository.findAll();
     }
+    @Cacheable(cacheNames = "courses", key = "#id", condition="#p0!=null")
+    public Courses getCourse(Long id) {return coursesRepository.findById(id).get();}
 
+    @CachePut(cacheNames = "courses", key="#p0", condition="#p0!=null")
     public void addNewCourse(Courses courses) {
+       Optional <Courses> coursesOptional = coursesRepository.findByCourseName(courses.getCourseName());
+        if (coursesOptional.isPresent()) {
+            throw new IllegalStateException("Already existing course");
+        }
         coursesRepository.save(courses);
     }
 
+    @CacheEvict(cacheNames = "courses",key="#p0", condition="#p0!=null")
     public void deleteCourse(Long courseId) {
         boolean exists = coursesRepository.existsById(courseId);
         if (!exists) {
@@ -88,7 +101,7 @@ public class CoursesService {
     public void assignClassroomToCourse(Long classroomId, Long courseId) {
         Classrooms classrooms = classroomsRepository.findById(classroomId).get();
         Courses courses = coursesRepository.findById(courseId).get();
-        if (!classrooms.getAvailability()) {
+        if (classrooms.getAvailability()==Boolean.FALSE) {
             throw new IllegalStateException("Your class is not available");
         }
         courses.assignClassroom(classrooms);

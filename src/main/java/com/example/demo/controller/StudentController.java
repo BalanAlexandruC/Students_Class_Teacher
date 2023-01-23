@@ -5,6 +5,8 @@ import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -21,6 +23,10 @@ public class StudentController {
     @GetMapping("/get")
     public List<Student> getStudents(){
         return studentService.getStudents();
+    }
+    @GetMapping("/get/{studentId}")
+    public Student getStudent(@PathVariable Long studentId){
+        return studentService.getStudent( studentId);
     }
     @PostMapping("/register")
     public void registerNewStudent(@RequestBody Student student){

@@ -7,9 +7,10 @@ import javax.persistence.*;
 @Entity(name = "Classrooms")
 @Table(name = "classrooms")
 public class Classrooms {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long    id;
     @JsonIgnore
     @OneToOne(mappedBy = "classroom")
     private Courses courses;
@@ -36,7 +37,9 @@ public class Classrooms {
         return availability;
     }
 
-    public Courses getCourses() {return courses;}
+    public Courses getCourses() {
+        return courses;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -64,13 +67,20 @@ public class Classrooms {
         this.availability = availability;
     }
 
+    public Classrooms(Long id, String name, Long capacity) {
+        this.id = id;
+        this.name = name;
+        this.capacity = capacity;
+    }
+
     @Override
     public String toString() {
         return "Classrooms{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", capacity=" + capacity +
-                ", availability=" + availability +
-                '}';
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", capacity=" + capacity +
+            ", availability=" + availability +
+            '}';
     }
+
 }

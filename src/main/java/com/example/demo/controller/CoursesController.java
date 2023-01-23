@@ -21,6 +21,8 @@ public class CoursesController {
 
     @GetMapping("/get")
     public List<Courses> getCourses(){return coursesService.getCourses();}
+    @GetMapping("/get/{courseId}")
+    public Courses getCourse(@PathVariable Long courseId){return coursesService.getCourse(courseId);}
 
     @PostMapping("/register")
     public void registerNewCourse(@RequestBody  Courses courses){

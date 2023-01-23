@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
 @Entity(name = "Student")
 @Table(name="students")
 public class Student {

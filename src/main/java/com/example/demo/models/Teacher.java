@@ -1,9 +1,6 @@
 package com.example.demo.models;
 
-import com.example.demo.repositoryes.TeacherRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -17,18 +14,18 @@ public class Teacher {
     private Long id;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     private Set<Courses> courses= new HashSet<>();
 
-    private String teacher;
+    private String name;
     private Long likes;
 
     public Long getId() {
         return id;
     }
 
-    public String getTeacher() {
-        return teacher;
+    public String getName() {
+        return name;
     }
 
     public Long getLikes() {
@@ -42,8 +39,8 @@ public class Teacher {
         this.id = id;
     }
 
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setLikes(Long likes) {
@@ -51,17 +48,17 @@ public class Teacher {
     }
 
 
-    public Teacher(Long id, String teacher, Long likes) {
+    public Teacher(Long id, String name, Long likes) {
         this.id = id;
-        this.teacher = teacher;
+        this.name = name;
         this.likes = likes;
     }
 
     public Teacher() {
     }
 
-    public Teacher(String teacher, Long likes) {
-        this.teacher = teacher;
+    public Teacher(String name, Long likes) {
+        this.name = name;
         this.likes = likes;
     }
 
@@ -69,7 +66,7 @@ public class Teacher {
     public String toString() {
         return "Teacher{" +
                 "id=" + id +
-                ", teacher='" + teacher + '\'' +
+                ", teacher='" + name + '\'' +
                 ", likes=" + likes +
                 '}';
     }

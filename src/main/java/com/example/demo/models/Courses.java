@@ -44,9 +44,7 @@ public class Courses {
         return teacher;
     }
 
-    public String getCourseName() {
-        return courseName;
-    }
+    public String getCourseName() {return courseName;}
 
     public Long getDuration() {
         return duration;

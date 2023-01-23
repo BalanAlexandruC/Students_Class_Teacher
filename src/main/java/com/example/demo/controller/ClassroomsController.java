@@ -19,11 +19,10 @@ public class ClassroomsController {
 
     @GetMapping("/get")
     public List<Classrooms> getClassrooms(){return classroomsService.getClassrooms();}
-
+    @GetMapping(path = "/get/{classroomId}")
+    public Classrooms getClassroom(@PathVariable("classroomId") Long classroomId){return classroomsService.getClassroomById(classroomId);}
     @PostMapping("/register")
-    public void registerNewCourse(@RequestBody Classrooms classrooms){
-        classroomsService.addNewClassroom(classrooms);
-    }
+    public void registerNewCourse(@RequestBody Classrooms classrooms){classroomsService.addNewClassroom(classrooms);}
 
     @DeleteMapping(path = "{classroomId}")
     public void deleteCourse(@PathVariable("classroomId") Long classroomId){classroomsService.deleteClassroom(classroomId);}
